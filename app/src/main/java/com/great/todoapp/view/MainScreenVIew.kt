@@ -38,8 +38,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,8 +52,6 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
-
 import com.great.todoapp.data.MainUiState
 import com.great.todoapp.viewmodel.MainScreenAction
 import java.text.SimpleDateFormat
@@ -67,7 +63,7 @@ import kotlin.reflect.KFunction1
 
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun MainScreen(uiState: MainUiState, onAction: KFunction1<MainScreenAction, Unit>) {
     Scaffold(

@@ -1,28 +1,36 @@
 package com.great.todoapp.secondscreen
 
-import AddItemScreen
-import MainScreen
-import MainScreenViewmodel
-import TodoItem
+
+
+
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.workshop_animations.some_feature.MainScreenEventHandler
+
 
 
 @Composable
-fun AddItemScreenEntry(navController: NavController, item: TodoItem?) {
+fun AddItemScreenEntry(navController: NavController, item: String?) {
 
-    val viewModel = viewModel(modelClass = MainScreenViewmodel::class)
+    val viewModel = viewModel(modelClass = AddItemViewModel::class)
 
-    MainScreenEventHandler(
+    AddItemEventHandler(
         uiEvent = viewModel.uiEvent,
-        navigateToAnotherFeature = { navController.navigate("main_screen") },
-        navigateToAddFeature = { navController.navigate("main_screen") }
+
+        navigateToMainScreen = { navController.navigate("main_screen") }
     )
-    AddItemScreen(
-        item = item,
+    if (item == null)
+
+        AddItemScreen(
+            item = null,
+            uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
+            onAction = viewModel::onAction
+        )
+    else
+        viewModel.itemId=item;
+        AddItemScreen(
+        item = item?.let { viewModel.onEditItem(it) },
         uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
         onAction = viewModel::onAction
 

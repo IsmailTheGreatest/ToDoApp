@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.util.UUID
 
 
 class MainScreenViewmodel : ViewModel() {
@@ -34,9 +33,7 @@ class MainScreenViewmodel : ViewModel() {
             }
         }
     }
-fun onEditItem(item: String): TodoItem {
-        return repository.getItem(item)
-    }
+
     fun onAction(action: MainScreenAction) {
         when (action) {
             is MainScreenAction.MakeItemDone -> {
@@ -45,7 +42,7 @@ fun onEditItem(item: String): TodoItem {
             is MainScreenAction.EditItem -> {
                 repository.editItem(action.item)
                 viewModelScope.launch {
-                    _uiEvent.emit(MainScreenEvent.NavigateToMain())
+                    _uiEvent.emit(MainScreenEvent.NavigateToEdit(item = action.item))
                 }
             }
             is MainScreenAction.OnButtonClick -> {

@@ -1,13 +1,12 @@
-package com.example.workshop_animations.some_feature
+package com.great.todoapp.viewmodel
 
-import AddItemScreen
 import MainScreen
 import MainScreenViewmodel
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.navArgument
+
 
 
 @Composable
@@ -17,8 +16,8 @@ fun MainScreenEntry(navController: NavController) {
 
     MainScreenEventHandler(
         uiEvent = viewModel.uiEvent,
-        navigateToAnotherFeature = {
-            navController.navigate("add_item_screen")
+        navigateToEditFeature = {
+            navController.navigate("add_item_screen/${it.id}")
 
         },
         navigateToAddFeature = { navController.navigate("add_item_screen") }

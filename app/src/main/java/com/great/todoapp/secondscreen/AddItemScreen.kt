@@ -1,3 +1,6 @@
+package com.great.todoapp.secondscreen
+
+import TodoItem
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
@@ -42,9 +45,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import com.great.todoapp.data.MainUiState
-import com.great.todoapp.viewmodel.MainScreenAction
+
+
+import com.great.todoapp.viewmodel.AddItemAction
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -52,25 +55,26 @@ import java.util.Locale
 import java.util.UUID
 import kotlin.reflect.KFunction1
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun AddItemScreen(item: TodoItem?,
-    uiState: MainUiState, onAction: KFunction1<MainScreenAction, Unit>)
+    uiState: AddItemUiState, onAction: KFunction1<AddItemAction, Unit>)
     // Optional parameter for editing
      {
     Scaffold(
         modifier = Modifier.fillMaxSize()
     ) {
         when (uiState) {
-            is MainUiState.Content -> {
+            is AddItemUiState.EditItemContent -> {
 
 
                     AddItemScreenContent(Modifier.padding(top = it.calculateTopPadding()), onAction, item = item)
-
-
+            }
+            is AddItemUiState.AddItemContent -> {
+                AddItemScreenContent(Modifier.padding(top = it.calculateTopPadding()), onAction)
             }
 
-            MainUiState.Loading -> {
+            AddItemUiState.Loading -> {
                 Box(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
@@ -85,8 +89,8 @@ fun AddItemScreen(item: TodoItem?,
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddItemScreenContent(
-   modifier: Modifier,
-    onAction: (MainScreenAction) -> Unit,
+    modifier: Modifier,
+    onAction: (AddItemAction) -> Unit,
     item: TodoItem?=null
 ) {
     val priorityOptions = listOf("Нет", "Низкий", "Высокий")
@@ -131,7 +135,7 @@ fun AddItemScreenContent(
             TopAppBar(
                 title = {},
                 navigationIcon = {
-                    IconButton(onClick = { onAction(MainScreenAction.OnButtonClick()) }) {
+                    IconButton(onClick = { onAction(AddItemAction.OnButtonClick()) }) {
                         Icon(imageVector = Icons.Default.Close, contentDescription = "Close")
                     }
                 },
@@ -155,9 +159,9 @@ fun AddItemScreenContent(
                                 last_updated_by = "user"
                             )
                             if (item == null) {
-                                onAction(MainScreenAction.AddItem(newItem))
+                                onAction(AddItemAction.AddItem(newItem))
                             } else {
-                                onAction(MainScreenAction.EditItem(newItem))
+                                onAction(AddItemAction.EditItem(newItem))
                             }
 
                         }

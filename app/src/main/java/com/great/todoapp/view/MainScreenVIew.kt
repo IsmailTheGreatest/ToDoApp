@@ -18,6 +18,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Done
@@ -115,7 +116,7 @@ fun MainScreenContent(
                     if (!isCollapsed) {
                         Spacer(modifier = Modifier.height(10.dp))
                         Text(
-                            "Выполненные - ${uiState.items.size}", color = Color.Gray,
+                            "Выполненные - ${uiState.completedItems}", color = Color.Gray,
                             fontSize = 13.sp
                         )
                     }
@@ -124,7 +125,7 @@ fun MainScreenContent(
             actions = {
                 IconButton(onClick = { showCompleted = !showCompleted }) {
                     Icon(
-                        imageVector = if (showCompleted) Icons.Default.Done else Icons.Default.Clear,
+                        imageVector = if (showCompleted) Icons.AutoMirrored.Default.ArrowBack else Icons.Default.Clear,
                         contentDescription = if (showCompleted) "Hide completed tasks" else "Show completed tasks"
                     )
                 }

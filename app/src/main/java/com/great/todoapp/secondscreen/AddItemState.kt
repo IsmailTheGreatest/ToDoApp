@@ -7,7 +7,7 @@ sealed interface AddItemUiState {
 
     data object Loading : AddItemUiState
 
-    data class EditItemContent(val item: TodoItem) : AddItemUiState
+    data class EditItemContent(val item: TodoItem?) : AddItemUiState
         class AddItemContent(): AddItemUiState
 
 }

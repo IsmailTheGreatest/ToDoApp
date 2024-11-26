@@ -21,18 +21,18 @@ fun AddItemScreenEntry(navController: NavController, item: String?) {
         navigateToMainScreen = { navController.navigate("main_screen") }
     )
     if (item == null)
-
+    {
         AddItemScreen(
             item = null,
             uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
             onAction = viewModel::onAction
-        )
-    else
+        )}
+    else{
         viewModel.itemId=item;
         AddItemScreen(
         item = item?.let { viewModel.onEditItem(it) },
         uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
         onAction = viewModel::onAction
 
-    )
+    )}
 }

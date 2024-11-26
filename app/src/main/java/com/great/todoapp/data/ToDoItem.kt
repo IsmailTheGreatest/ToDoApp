@@ -59,9 +59,12 @@ object MyRepository {
     )
 
     fun getList() = list.asStateFlow()
-fun getItem(id: String): TodoItem {
+fun getItem(id: String?) : TodoItem? {
+    if (id != null) {
         return list.value.first { it.id == id }
     }
+    else return null;
+}
     fun addItem(item: TodoItem) {
         list.update { it + item }
     }

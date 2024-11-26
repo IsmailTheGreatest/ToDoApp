@@ -4,9 +4,9 @@ import MyRepository
 import TodoItem
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.great.todoapp.secondscreen.AddItemEvent
-import com.great.todoapp.secondscreen.AddItemUiState
+
 import com.great.todoapp.viewmodel.AddItemAction
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,12 +31,13 @@ class AddItemViewModel : ViewModel() {
         viewModelScope.launch {
             delay(200)
             if(itemId == null){
+
                 _uiState.value = AddItemUiState.AddItemContent()
             }else{
-            _uiState.value = AddItemUiState.EditItemContent(item = repository.getItem(itemId!!))
+            _uiState.value = AddItemUiState.EditItemContent(item = onEditItem(itemId!!))
     }}}
 
-    fun onEditItem(item: String): TodoItem {
+    fun onEditItem(item: String): TodoItem? {
         return repository.getItem(item)
     }
     fun onAction(action: AddItemAction) {
@@ -55,7 +56,17 @@ class AddItemViewModel : ViewModel() {
 
             }
             is AddItemAction.RemoveItem -> {
-                repository.removeItem(action.item)
+                viewModelScope.launch {
+                    _uiEvent.emit(AddItemEvent.NavigateToMain())
+                    delay(100)
+                    repository.removeItem(action.item)
+
+
+
+                }
+
+
+
 
 
 
